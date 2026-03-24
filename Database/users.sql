@@ -8,5 +8,5 @@ create table users (
     email varchar(255) not null,
     password VARCHAR(255) not null,
     role ENUM('admin', 'user') not null
-    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
