@@ -60,12 +60,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - Prompt Manager</title>
+    <title>Sign Up - Prompt Repository</title>
     <link rel="stylesheet" href="../Css/register.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="form-title">Créer un <span>Compte</span></h1>
+        <div class="logo-container">
+            <div class="logo-icon">⚡</div>
+        </div>
+        
+        <h1 class="form-title">Prompt Repository</h1>
+        <p class="form-subtitle">Create your developer account</p>
         
         <?php if($error): ?>
             <div class="message error">
@@ -81,31 +86,40 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         <form method="post">
             <div class="form-group">
-                <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
+                <label for="username">USERNAME</label>
+                <input type="text" id="username" name="username" placeholder="dev_genius" required>
             </div>
 
             <div class="form-group">
-                <label for="email">Adresse Email</label>
-                <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                <label for="email">EMAIL ADDRESS</label>
+                <input type="email" id="email" name="email" placeholder="name@company.com" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Mot de passe</label>
+                <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password" placeholder="••••••••" required>
             </div>
 
             <div class="form-group">
-                <label for="confirm_password">Confirmer le mot de passe</label>
+                <label for="confirm_password">CONFIRM PASSWORD</label>
                 <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
             </div>
 
-            <input type="submit" value="S'inscrire">
+            <input type="submit" value="Create Account →">
         </form>
 
-        <div class="form-footer">
-            Vous avez déjà un compte? <a href="login.php">Connectez-vous ici</a>
+        <div class="auth-link">
+            Already have an account? <a href="login.php">Sign In</a>
         </div>
     </div>
+
+    <footer>
+        <p>© 2024 PROMPT REPOSITORY. THE KINETIC TERMINAL</p>
+        <p>
+            <a href="#">PRIVACY POLICY</a> · 
+            <a href="#">TERMS OF SERVICE</a> · 
+            <a href="#">SUPPORT</a>
+        </p>
+    </footer>
 </body>
 </html>

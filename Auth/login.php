@@ -45,48 +45,60 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Prompt Manager</title>
+    <title>Sign In - Prompt Repository</title>
     <link rel="stylesheet" href="../Css/login.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="form-title">Se <span>Connecter</span></h1>
+        <div class="logo-container">
+            <div class="logo-icon">⚡</div>
+        </div>
+        
+        <h1 class="form-title">Prompt Repository</h1>
+        <p class="form-subtitle">Welcome back, developer</p>
 
         <?php if(!empty($error_login)): ?>
             <div class="message error">
-                ❌ <?php echo htmlspecialchars($error_login); ?>
+                <?php echo htmlspecialchars($error_login); ?>
             </div>
         <?php endif; ?>
 
         <?php if(!empty($success_login)): ?>
             <div class="message success">
-                ✅ <?php echo htmlspecialchars($success_login); ?>
+                <?php echo htmlspecialchars($success_login); ?>
             </div>
         <?php endif; ?>
 
         <form method="post">
             <div class="form-group">
-                <label for="email">Adresse Email</label>
-                <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                <label for="email">EMAIL ADDRESS</label>
+                <input type="email" id="email" name="email" placeholder="name@company.com" required>
             </div>
 
             <div class="form-group">
-                <label for="password">Mot de passe</label>
+                <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password" placeholder="••••••••" required>
             </div>
 
-            <input type="submit" value="Se connecter">
+            <input type="submit" value="Sign In →">
         </form>
 
-        <div class="divider"></div>
-
-        <div class="form-footer">
-            Vous n'avez pas de compte? <a href="register.php">Inscrivez-vous ici</a>
+        <div class="auth-link">
+            Don't have an account? <a href="register.php">Sign Up</a>
         </div>
     </div>
+
+    <footer>
+        <p>© 2024 PROMPT REPOSITORY. THE KINETIC TERMINAL</p>
+        <p>
+            <a href="#">PRIVACY POLICY</a> · 
+            <a href="#">TERMS OF SERVICE</a> · 
+            <a href="#">SUPPORT</a>
+        </p>
+    </footer>
 </body>
 </html>
