@@ -31,11 +31,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if($user){
             $error = "❌ Cet email ou ce nom d'utilisateur est déjà utilisé";
+        }else if ($user['role'] === 'admin') {
+            $error = "❌ Les administrateurs ne peuvent pas s'inscrire via ce formulaire";
+
         }
         else{
             try{
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, 'user')");
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':password', $hashed_password);
@@ -45,7 +48,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $_SESSION['email'] = $email;
                 $_SESSION['message'] = "✅ Inscription réussie! Bienvenue!";
                 
-                header("Location: ../index.php");
+                
+                header("Location: ../Auth/login.php");
                 exit();
             }catch(PDOException $e){
                 $error = "❌ Erreur: " . $e->getMessage();

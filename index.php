@@ -127,8 +127,6 @@ try {
                     </thead>
                     <tbody>
                         <?php 
-                        $displayed = 0;
-                        
 
                         $categoryMap = [
                             'IA' => 'category-ia',
@@ -137,17 +135,23 @@ try {
                             'Dev web' => 'category-web'
                         ];
                         
-                        foreach($prompts as $prompt): 
-                            if($displayed >= 5) break;
-                            $displayed++;
-                            $status = ['approved', 'pending', 'rejected'];
-                            $statusIndex = $displayed % 3;
-                            $date = date('M d, Y', strtotime('now'));
-                            
 
+                        $max = 5;
+                        $count = 0;
+                        
+                        foreach($prompts as $prompt):
+                            if($count >= $max) break;  // Arrêter après 5
+                            $count++;
+                            
+                            // Récupérer la classe de catégorie
                             $categoryClass = isset($categoryMap[$prompt['category_name']]) 
                                 ? $categoryMap[$prompt['category_name']] 
-                                : 'category-web';
+                                : '';
+                            
+
+                            $status = 'approved';
+                            $date = date('M d, Y');
+                        
                         ?>
                             <tr>
                                 <td class="prompt-name">
@@ -161,12 +165,12 @@ try {
                                 </td>
                                 <td><?php echo $date; ?></td>
                                 <td>
-                                    <span class="status status-<?php echo strtolower($status[$statusIndex]); ?>">
-                                        ● <?php echo $status[$statusIndex]; ?>
+                                    <span class="status status-<?php echo ($status); ?>">
+                                        ● <?php echo $status; ?>
                                     </span>
                                 </td>
                                 <td class="actions">
-                                    <a href="Promptes/edit.php?id=<?php echo $prompt['id']; ?>" class="btn-action btn-edit" title="Edit"> Edit</a>
+                                    <a href="Promptes/edit.php?id= <?php echo $prompt['id']; ?> " class="btn-action btn-edit" title="Edit"> Edit</a>
                                     <a href="Promptes/delete.php?id=<?php echo $prompt['id']; ?>" class="btn-action btn-delete" title="Delete" onclick="return confirm('Are you sure?')"> Delete</a>
                                 </td>
                             </tr>

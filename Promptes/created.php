@@ -23,7 +23,7 @@ try{
             $cat = $stmtCat->fetch(PDO::FETCH_ASSOC);
             
             if(!$cat){
-                $msg_error = "⚠️ Selected category does not exist";
+                $msg_error = " Selected category does not exist";
             } else {
                 $categoryId = $cat['id'];
                 
@@ -75,9 +75,9 @@ try{
         </nav>
 
         <div class="user-profile">
-            <div class="user-avatar">👤</div>
+            <img src="../img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
             <div class="user-info">
-                <div class="user-name"><?php echo htmlspecialchars($_SESSION['username']); ?></div>
+                <div class="user-name"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Utilisateur'; ?></div>
                 <div class="user-role">Pro Account</div>
             </div>
         </div>
@@ -153,12 +153,6 @@ try{
                             }
                             ?>
                         </select>
-                    </div>
-
-                    <!-- Tags Input -->
-                    <div class="form-section">
-                        <label class="form-label">Metadata Tags</label>
-                        <input type="text" name="tags" class="form-input" placeholder="Add tags separated by comma">
                     </div>
                 </div>
 

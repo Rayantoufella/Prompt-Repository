@@ -25,6 +25,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
             else if(!password_verify($password, $user['password'])){
                 $error_login = "❌ Email ou mot de passe incorrect";
+            }else if ($user['role'] === 'admin') {
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['email'] = $user['email'];
+                header("Location: ../Admin/dashboard.php");
+                exit();
             }
             else {
                 $_SESSION['username'] = $user['username'];

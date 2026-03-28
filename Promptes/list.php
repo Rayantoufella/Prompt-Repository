@@ -20,6 +20,41 @@ if(empty($allPrompts)){
     die("Error fetching prompts: " . $e->getMessage());
 }
 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+$recherche = trim($_POST["search"] ?? "");
+
+if(empty($recherche)){
+    echo "<script>alert('Please enter a search term');</script>";
+}else{
+
+    try{
+
+        $stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id WHERE p.title LIKE :search OR p.context LIKE :search");
+        $searchTerm = "%$recherche%" ;
+        $stmt->bindParam(':search', $searchTerm);
+        $stmt->execute();
+        $allPromptsSearch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(empty($allPromptsSearch)){
+            echo "<script>alert('No prompts found for \"$recherche\"');</script>";
+            $allPrompts = [];
+        }else{
+            $allPrompts = $allPromptsSearch;
+        }
+
+
+    }catch(PDOException $e){
+
+        die("Error searching prompts: " . $e->getMessage()) ;
+
+    }
+
+
+}
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +67,7 @@ if(empty($allPrompts)){
     <link rel="stylesheet" href="../Css/list.css?v=<?php echo time(); ?>">
 </head>
 <body>
+
     <header id="sidebar">
 
         <div class="logo-container" id="brand">
@@ -70,6 +106,15 @@ if(empty($allPrompts)){
             <p class="list-subtitle">Browse, test, and implement world-class prompts crafted by the community.</p>
         </div>
 
+        <form method="POST" class="search">
+            <input type="text" placeholder="Search prompts..." name="search" required>
+            <input type="submit" value="Search">
+        </form>
+
+        <div class="return-page">
+            <a href="list.php"> Back to All Prompts</a>
+        </div>
+
         <!-- Prompts Grid -->
         <div class="prompts-grid">
             <?php if(empty($allPrompts)): ?>
@@ -80,7 +125,10 @@ if(empty($allPrompts)){
                     <a href="created.php" class="btn-create">+ Create Prompt</a>
                 </div>
             <?php else: ?>
+
+
                 <?php foreach($allPrompts as $prompt): ?>
+
                     <div class="prompt-card">
                         <div class="card-header">
                             <span class="card-category"><?php echo htmlspecialchars($prompt['category_name']); ?></span>
@@ -94,6 +142,9 @@ if(empty($allPrompts)){
                         </div>
                     </div>
                 <?php endforeach; ?>
+
+
+
             <?php endif; ?>
         </div>
     </main>
