@@ -142,10 +142,16 @@ try{
                         <label class="form-label">Primary Category</label>
                         <select name="category" class="form-select" required>
                             <option value="">Select a category</option>
-                            <option value="IA">IA</option>
-                            <option value="Dev mobile">Dev mobile</option>
-                            <option value="Data">Data</option>
-                            <option value="Dev web">Dev web</option>
+                            <?php
+                            try {
+                                $catStmt = $pdo->query("SELECT DISTINCT name FROM categorie ORDER BY name");
+                                while ($cat = $catStmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<option value=\"" . htmlspecialchars($cat['name']) . "\">" . htmlspecialchars($cat['name']) . "</option>";
+                                }
+                            } catch (Exception $e) {
+                                echo "<option value=\"\">Error loading categories</option>";
+                            }
+                            ?>
                         </select>
                     </div>
 
@@ -168,7 +174,7 @@ try{
                 <!-- Form Buttons -->
                 <div class="form-buttons">
                     <a href="../index.php" class="btn btn-secondary">Cancel</a>
-                    <button type="submit" class="btn btn-primary">🚀 Deploy Prompt</button>
+                    <button type="submit" class="btn btn-primary">Deploy Prompt</button>
                 </div>
 
             </form>

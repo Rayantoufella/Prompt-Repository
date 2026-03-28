@@ -105,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
             </div>
 
-            <input type="submit" value="Create Account →">
+            <input type="submit" value="Create Account →" class="submit-btn">
         </form>
 
         <div class="auth-link">

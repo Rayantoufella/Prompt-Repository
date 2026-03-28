@@ -681,6 +681,29 @@ main {
     backdrop-filter: blur(5px);
 }
 
+.form-select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%238b92a5" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.form-select option {
+    background: #1a2332;
+    color: #ffffff;
+    padding: 12px 10px;
+    font-weight: 500;
+}
+
+.form-select option:checked {
+    background: linear-gradient(135deg, #34e89e 0%, #1fc87c 100%);
+    color: #0a0d10;
+    font-weight: 600;
+}
+
 .form-input::placeholder,
 .form-textarea::placeholder {
     color: #8b92a5;

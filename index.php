@@ -103,24 +103,7 @@ try {
                     </div>
                 </div>
 
-                <div class="stat-card stat-card-orange">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-content">
-                        <p class="stat-label">Active Users</p>
-                        <h3 class="stat-value">156</h3>
-                        <span class="stat-change">+3</span>
-                    </div>
-                </div>
-
-                <div class="stat-card stat-card-green-alt">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-content">
-                        <p class="stat-label">Activity Today</p>
-                        <h3 class="stat-value">42</h3>
-                        <span class="stat-change">Live</span>
-                    </div>
-                </div>
-            </div>
+                
         </section>
 
         <!-- Recent Prompts Section -->
@@ -139,7 +122,7 @@ try {
                             <th>CATEGORY</th>
                             <th>DATE CREATED</th>
                             <th>STATUS</th>
-                            <th>ACTIONS</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -183,8 +166,8 @@ try {
                                     </span>
                                 </td>
                                 <td class="actions">
-                                    <a href="Promptes/edit.php?id=<?php echo $prompt['id']; ?>" title="Edit">✏️</a>
-                                    <a href="Promptes/delete.php?id=<?php echo $prompt['id']; ?>" title="Delete" onclick="return confirm('Are you sure?')">🗑️</a>
+                                    <a href="Promptes/edit.php?id=<?php echo $prompt['id']; ?>" class="btn-action btn-edit" title="Edit"> Edit</a>
+                                    <a href="Promptes/delete.php?id=<?php echo $prompt['id']; ?>" class="btn-action btn-delete" title="Delete" onclick="return confirm('Are you sure?')"> Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -1,0 +1,290 @@
+/* ============================================
+   EDIT PAGE - HEADER & LAYOUT
+   ============================================ */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 280px);
+    padding: 40px 20px !important;
+}
+
+.page-header {
+    position: absolute;
+    top: 40px;
+    left: 320px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #34e89e;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(52, 232, 158, 0.2);
+    background: rgba(52, 232, 158, 0.05);
+}
+
+.back-link:hover {
+    background: rgba(52, 232, 158, 0.15);
+    border-color: rgba(52, 232, 158, 0.4);
+    transform: translateX(-4px);
+}
+
+/* ============================================
+   EDIT FORM CONTAINER
+   ============================================ */
+.edit-form-container {
+    background: rgba(20, 25, 35, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    max-width: 550px;
+    width: 100%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.edit-form-container h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+}
+
+/* ============================================
+   FORM GROUPS
+   ============================================ */
+.form-group {
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group:last-of-type {
+    margin-bottom: 32px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: capitalize;
+    letter-spacing: -0.3px;
+}
+
+.form-group label::after {
+    content: ' *';
+    color: #ff6b6b;
+}
+
+/* ============================================
+   FORM INPUTS & TEXTAREA
+   ============================================ */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 16px;
+    background: rgba(10, 13, 16, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    transition: all 0.2s ease;
+    resize: vertical;
+    min-height: 44px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder,
+.form-group select::placeholder {
+    color: #8b92a5;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(52, 232, 158, 0.5);
+    background: rgba(10, 13, 16, 0.95);
+    box-shadow: 0 0 0 3px rgba(52, 232, 158, 0.1), inset 0 0 12px rgba(52, 232, 158, 0.05);
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.form-group textarea {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 14px 16px;
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group select {
+    background: rgba(10, 13, 16, 0.8) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%238b92a5" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+    appearance: none;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: rgba(10, 13, 16, 0.8);
+}
+
+.form-group select option {
+    background: #1a2332;
+    color: #ffffff;
+    padding: 12px 10px;
+    font-weight: 500;
+}
+
+.form-group select option:checked {
+    background: linear-gradient(135deg, #34e89e 0%, #1fc87c 100%);
+    color: #0a0d10;
+    font-weight: 600;
+}
+
+.form-group select option:disabled {
+    color: #8b92a5;
+}
+
+/* ============================================
+   BUTTON STYLES
+   ============================================ */
+.btn-submit {
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #34e89e 0%, #1fc87c 100%);
+    color: #0a0d10;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(52, 232, 158, 0.25);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-submit:hover {
+    box-shadow: 0 12px 32px rgba(52, 232, 158, 0.35);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #2ecf7f 0%, #0eb356 100%);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(52, 232, 158, 0.2);
+}
+
+.btn-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ============================================
+   FORM WRAPPER
+   ============================================ */
+.edit-form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    main {
+        min-height: auto;
+        padding: 80px 20px 40px 20px !important;
+    }
+
+    .page-header {
+        position: static;
+        margin-bottom: 30px;
+    }
+
+    .edit-form-container {
+        padding: 24px;
+    }
+
+    .edit-form-container h2 {
+        font-size: 22px;
+        margin-bottom: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+        padding: 12px 14px;
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+    }
+
+    .btn-submit {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 70px 16px 30px 16px !important;
+    }
+
+    .edit-form-container {
+        padding: 16px;
+    }
+
+    .edit-form-container h2 {
+        font-size: 20px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px;
+    }
+
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .back-link {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+}
