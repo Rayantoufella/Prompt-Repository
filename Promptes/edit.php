@@ -1,49 +1,58 @@
 <?php
-
-
+// Start session
 session_start();
 
+// Include database connection
+require_once '../db.php';
+
+// Get prompt ID from URL
 $editId = $_GET['id'] ?? null;
 
+// If no ID provided, redirect to list
 if (!$editId) {
     header("Location: list.php");
     exit();
 }
 
+// Get current prompt data from database
 try {
-    require_once '../db.php';
     $stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id WHERE p.id = ?");
     $stmt->execute([$editId]);
     $edit = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
+    // If prompt not found, show error
     if (!$edit) {
-        die("you can not edit
-        .");
+        die("Prompt not found. You cannot edit this prompt.");
     }
-} catch (Exception $e) {
-    die("Error: "  . $e->getMessage());
+}
+catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 
+// Handle form submission for updating the prompt
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
-        $title = ($_POST['title'] ?? "");
-        $categoryId = $_POST['category_id'] ?? "";
-        $context = $_POST['context'] ?? "";
+    // Get form data
+    $title = trim($_POST['title'] ?? "");
+    $categoryId = $_POST['category_id'] ?? "";
+    $context = trim($_POST['context'] ?? "");
     
-        if (empty($title) || empty($categoryId) || empty($context)) {
-            die("Please fill in all required fields.");
-        }
+    // Check if all required fields are filled
+    if (empty($title) || empty($categoryId) || empty($context)) {
+        die("Please fill in all required fields.");
+    }
     
-        try {
-            $stmt = $pdo->prepare("UPDATE prompt SET title = ?, categorie_id = ?, context = ? WHERE id = ?");
-            $stmt->execute([$title, $categoryId, $context, $editId]);
-            header("Location: list.php");
-            exit();
-        } catch (Exception $e) {
-            die("Error updating prompt: " . $e->getMessage());
-        }
-
+    // Update prompt in database
+    try {
+        $stmt = $pdo->prepare("UPDATE prompt SET title = ?, categorie_id = ?, context = ? WHERE id = ?");
+        $stmt->execute([$title, $categoryId, $context, $editId]);
+        
+        // Redirect to list after successful update
+        header("Location: list.php");
+        exit();
+    }
+    catch (Exception $e) {
+        die("Error updating prompt: " . $e->getMessage());
+    }
 }
 
 ?>
@@ -64,16 +73,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="logo-icon">⚡</div>
             <div class="logo-text">
                 <div class="logo-name" id="siteName">Prompt Repository</div>
-                <div class="logo-subtitle" id="siteTagline">AI Platform</div>
+                <div class="logo-subtitle" id="siteTagline">Prompt Platform</div>
             </div>
         </div>
 
         <nav id="sideNav">
             <ul id="menuList">
-                <li><a id="menuDashboard" href="../index.php"><span class="nav-icon">📊</span> Dashboard</a></li>
-                <li><a id="menuCategories" class="active" href="list.php"><span class="nav-icon">📂</span> Community</a></li>
-                <li><a id="menuAddPrompt" href="created.php"><svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Add Prompt</a></li>
-                <li><a id="menuSettings" href="#"><span class="nav-icon">⚙️</span> Settings</a></li>
+                <li><a id="menuDashboard" href="../index.php"><span class="nav-icon"><img src="../img/dashboard.svg" alt="Dashboard"></span> Dashboard</a></li>
+                <li><a id="menuCategories" class="active" href="list.php"><span class="nav-icon"><img src="../img/community.svg" alt="Community"></span> Community</a></li>
+                <li><a id="menuAddPrompt" href="created.php"><span class="nav-icon"><img src="../img/add-prompt.svg" alt="Add Prompt"></span> Add Prompt</a></li>
+                <li><a id="menuSettings" href="#"><span class="nav-icon"><img src="../img/settings.svg" alt="Settings"></span> Settings</a></li>
             </ul>
         </nav>
 

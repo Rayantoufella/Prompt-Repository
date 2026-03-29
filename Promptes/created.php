@@ -1,44 +1,51 @@
 <?php 
+// Start session
 session_start();
+
+// Include database connection
 require_once '../db.php';
 
+// Initialize message variables
 $msg_success = "";
 $msg_error = "";
 
-
-
-
-try{
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+// Handle form submission
+try {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Get form data from POST
         $title = trim($_POST['promptTitle'] ?? "");
         $category = $_POST['category'] ?? "";
         $context = trim($_POST['promptContent'] ?? "");
-
-        if(empty($title) || empty($category) || empty($context)){
+        
+        // Check if all required fields are filled
+        if(empty($title) || empty($category) || empty($context)) {
             $msg_error = "Please fill in all required fields";
         } else {
+            // Find the category ID from database
             $stmtCat = $pdo->prepare("SELECT id FROM categorie WHERE name = :name");
             $stmtCat->bindParam(':name', $category);
             $stmtCat->execute();
             $cat = $stmtCat->fetch(PDO::FETCH_ASSOC);
             
-            if(!$cat){
-                $msg_error = " Selected category does not exist";
+            // Check if category exists
+            if(!$cat) {
+                $msg_error = "Selected category does not exist";
             } else {
                 $categoryId = $cat['id'];
                 
+                // Insert new prompt into database
                 $stmt = $pdo->prepare("INSERT INTO prompt (title, categorie_id, context) VALUES (:title, :categorie_id, :context)");
                 $stmt->bindParam(':title', $title);
                 $stmt->bindParam(':categorie_id', $categoryId);
                 $stmt->bindParam(':context', $context);
                 $stmt->execute();
-
+                
                 $msg_success = "✅ Prompt created successfully";
             }
         }
     }
-
-}catch(PDOException $e){
+}
+catch(PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
 
@@ -53,6 +60,7 @@ try{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Prompt</title>
+        <link rel="stylesheet" href="../Css/dashboard.css">
         <link rel="stylesheet" href="../Css/created.css">
 </head>
 <body>  
@@ -61,16 +69,15 @@ try{
             <div class="logo-icon">⚡</div>
             <div>
                 <div class="logo-name">Prompt Repository</div>
-                <div class="logo-subtitle">AI Platform</div>
+                <div class="logo-subtitle">Prompt Platform</div>
             </div>
         </div>
 
         <nav>
             <ul>
-                <li><a href="../index.php"><span class="icon">📊</span> Dashboard</a></li>
-                <li><a href="list.php"><span class="icon">📂</span> Community</a></li>
-                <li><a href="created.php" class="active"><span class="icon">➕</span> Add Prompt</a></li>
-                <li><a href="#"><span class="icon">⚙️</span> Settings</a></li>
+                <li><a href="../index.php"><span class="nav-icon"><img src="../img/dashboard.svg" alt="dashboard"></span> Dashboard</a></li>
+                <li><a href="list.php"><span class="nav-icon"><img src="../img/community.svg" alt="community"></span> Community</a></li>
+                <li><a href="created.php" class="active"><span class="nav-icon"><img src="../img/add-prompt.svg" alt="add prompt"></span> Add Prompt</a></li>
             </ul>
         </nav>
 
@@ -78,7 +85,7 @@ try{
             <img src="../img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
             <div class="user-info">
                 <div class="user-name"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Utilisateur'; ?></div>
-                <div class="user-role">Pro Account</div>
+                <div class="user-role">user Account</div>
             </div>
         </div>
 

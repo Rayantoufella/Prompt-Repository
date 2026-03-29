@@ -2,10 +2,10 @@
 session_start();
 require_once "db.php";
 
-/*if (!isset($_SESSION["username"])){
+if (!isset($_SESSION["username"])){
     header("Location: auth/login.php");
     exit();
-}*/
+}
 
 
 
@@ -46,16 +46,16 @@ try {
             <div class="logo-icon">⚡</div>
             <div class="logo-text">
                 <div class="logo-name" id="siteName">Prompt Repository</div>
-                <div class="logo-subtitle" id="siteTagline">AI Platform</div>
+                <div class="logo-subtitle" id="siteTagline">Prompt Platform</div>
             </div>
         </div>
 
         <nav id="sideNav">
             <ul id="menuList">
-                <li><a id="menuDashboard" class="active" href="index.php"><span class="nav-icon">📊</span> Dashboard</a></li>
-                <li><a id="menuCategories" href="Promptes/list.php"><span class="nav-icon">📂</span> Community</a></li>
-                <li><a id="menuAddPrompt" href="Promptes/created.php"><svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Add Prompt</a></li>
-                <li><a id="menuSettings" href="#"><span class="nav-icon">⚙️</span> Settings</a></li>
+                <li><a id="menuDashboard" class="active" href="index.php"><span class="nav-icon"><img src="img/dashboard.svg" alt="Dashboard"></span> Dashboard</a></li>
+                <li><a id="menuCategories" href="Promptes/list.php"><span class="nav-icon"><img src="img/community.svg" alt="Community"></span> Community</a></li>
+                <li><a id="menuAddPrompt" href="Promptes/created.php"><span class="nav-icon"><img src="img/add-prompt.svg" alt="Add Prompt"></span> Add Prompt</a></li>
+
             </ul>
         </nav>
 
@@ -63,7 +63,7 @@ try {
             <img src="img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
             <div class="user-info" id="userInfo">
                 <div class="user-name" id="userName"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Utilisateur'; ?></div>
-                <div class="user-role" id="userRole">Pro Account</div>
+                <div class="user-role" id="userRole">user Account</div>
             </div>
         </div>
 
@@ -81,12 +81,13 @@ try {
 
         <section class="stats-overview">
             <h2>Workspace Overview</h2>
-            <p class="stats-subtitle">Monitor your repository performance and active AI prompt sequences across all connected LLM endpoints.</p>
-            
+            <br>
+            <br>
+            <br>
             <div class="stats-grid">
 
                 <div class="stat-card stat-card-green">
-                    <div class="stat-icon">📋</div>
+                    <div class="stat-icon"><img src="img/clipboard.svg" alt="Total Prompts"></div>
                     <div class="stat-content">
                         <p class="stat-label">Total Prompts</p>
                         <h3 class="stat-value"><?php echo count($prompts); ?></h3>
@@ -95,7 +96,7 @@ try {
                 </div>
 
                 <div class="stat-card stat-card-blue">
-                    <div class="stat-icon">📂</div>
+                    <div class="stat-icon"><img src="img/folder.svg" alt="Categories"></div>
                     <div class="stat-content">
                         <p class="stat-label">Categories</p>
                         <h3 class="stat-value">4</h3>

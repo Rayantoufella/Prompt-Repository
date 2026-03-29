@@ -63,14 +63,14 @@ try {
             <div class="logo-icon">⚡</div>
             <div class="logo-text">
                 <div class="logo-name" id="siteName">Prompt Repository</div>
-                <div class="logo-subtitle" id="siteTagline">AI Platform</div>
+                <div class="logo-subtitle" id="siteTagline">Prompt Platform</div>
             </div>
         </div>
 
         <nav id="sideNav">
             <ul id="menuList">
-                <li><a id="menuDashboard" class="active" href="dashboard.php">📋 Dashboard Admin</a></li>
-                <li><a id="menuSettings" href="categories.php">📂 Categories</a></li>
+                <li><a id="menuDashboard" class="active" href="dashboard.php"><img src="../img/dashboard.svg" alt="dashboard"> Dashboard Admin</a></li>
+                <li><a id="menuSettings" href="categories.php"><img src="../img/category.svg" alt="categories"> Categories</a></li>
             </ul>
         </nav>
 
@@ -93,7 +93,7 @@ try {
         <!-- Statistiques Principales -->
         <section class="stats-section">
             <div class="stat-card">
-                <div class="stat-icon">📝</div>
+                <img src="../img/prompt.svg" alt="Prompts" class="stat-img">
                 <div class="stat-content">
                     <div class="stat-value"><?php echo $totalPrompts; ?></div>
                     <div class="stat-label">Prompts Total</div>
@@ -101,7 +101,7 @@ try {
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">👥</div>
+                <img src="../img/user.svg" alt="Utilisateurs" class="stat-img">
                 <div class="stat-content">
                     <div class="stat-value"><?php echo $totalUsers; ?></div>
                     <div class="stat-label">Utilisateurs Actifs</div>
@@ -109,7 +109,7 @@ try {
             </div>
 
             <div class="stat-card">
-                <div class="stat-icon">📂</div>
+                <img src="../img/category.svg" alt="Catégories" class="stat-img">
                 <div class="stat-content">
                     <div class="stat-value"><?php echo $totalCategories; ?></div>
                     <div class="stat-label">Catégories</div>

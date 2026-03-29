@@ -51,14 +51,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <div class="logo-icon">⚡</div>
             <div class="logo-text">
                 <div class="logo-name" id="siteName">Prompt Repository</div>
-                <div class="logo-subtitle" id="siteTagline">AI Platform</div>
+                <div class="logo-subtitle" id="siteTagline">Prompt Platform</div>
             </div>
         </div>
 
         <nav id="sideNav">
             <ul id="menuList">
-                <li><a id="menuDashboard"  href="dashboard.php">📋 Dashboard Admin</a></li>
-                <li><a id="menuSettings" href="categories.php">📂 Categories</a></li>
+                <li><a id="menuDashboard"  href="dashboard.php"><img src="../img/dashboard.svg" alt="dashboard"> Dashboard Admin</a></li>
+                <li><a id="menuSettings" href="categories.php"><img src="../img/category.svg" alt="categories"> Categories</a></li>
             </ul>
         </nav>
 
@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <img src="../img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
             <div class="user-info" id="userInfo">
                 <div class="user-name" id="userName"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Utilisateur'; ?></div>
-                <div class="user-role" id="userRole">Pro Account</div>
+                <div class="user-role" id="userRole">Admin Account</div>
             </div>
         </div>
         <a id="logoutButton" class="logout-link" href="../Auth/logout.php">Déconnexion</a>
@@ -77,7 +77,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <h1>Welcome, <?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest'; ?></h1>
         </section>
 
+        <div class="add-Category">
+            <h2>Add New Category</h2>
+            <form  method="POST">
+                <input type="text" name="name" placeholder="Category Name" required>
+                <textarea name="description" placeholder="Category Description" required></textarea>
+                <button type="submit">Add Category</button>
+            </form>
+        </div>
 
+        <br><br><br>
 
         <?php foreach($resultCat as $cat): ?>
             <div class="category-card">
@@ -90,14 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 
-        <div class="add-Category">
-            <h2>Add New Category</h2>
-            <form  method="POST">
-                <input type="text" name="name" placeholder="Category Name" required>
-                <textarea name="description" placeholder="Category Description" required></textarea>
-                <button type="submit">Add Category</button>
-            </form>
-        </div>  
+        
         
 
 

@@ -120,24 +120,34 @@ nav a {
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 nav a .nav-icon,
 nav a svg,
 nav a img.nav-icon,
+nav a img,
 nav a .nav-icon-svg {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    fill: #8b92a5;
-    stroke: #8b92a5;
     transition: all 0.2s ease;
+    object-fit: contain;
+    opacity: 0.8;
+    filter: invert(60%) sepia(8%) saturate(0.9);
+}
+
+nav a .nav-icon {
+    min-width: 20px;
+    min-height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     font-size: 16px;
     line-height: 1;
-    object-fit: contain;
+    overflow: hidden;
+    position: relative;
 }
 
 nav a::before {
@@ -151,6 +161,7 @@ nav a::before {
     transform: scaleY(0);
     transition: transform 0.2s ease;
     transform-origin: top;
+    z-index: 1;
 }
 
 nav a:hover {
@@ -161,9 +172,9 @@ nav a:hover {
 nav a:hover .nav-icon,
 nav a:hover svg,
 nav a:hover img.nav-icon,
+nav a:hover img,
 nav a:hover .nav-icon-svg {
-    fill: #34e89e;
-    stroke: #34e89e;
+    opacity: 1;
     filter: invert(79%) sepia(32%) saturate(500%) hue-rotate(80deg) brightness(110%);
 }
 
@@ -179,9 +190,9 @@ nav a.active {
 nav a.active .nav-icon,
 nav a.active svg,
 nav a.active img.nav-icon,
+nav a.active img,
 nav a.active .nav-icon-svg {
-    fill: #34e89e;
-    stroke: #34e89e;
+    opacity: 1;
     filter: invert(79%) sepia(32%) saturate(500%) hue-rotate(80deg) brightness(110%);
 }
 

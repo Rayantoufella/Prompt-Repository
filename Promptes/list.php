@@ -1,58 +1,60 @@
 <?php
-
+// Include database connection
 require_once("../db.php");
 
+// Get category ID from URL if exists
 $listId = $_GET["id"] ?? null;
 
-try{
-
-$stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id");
-
-$stmt->execute();
-
-$allPrompts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if(empty($allPrompts)){
-    $allPrompts = [];
+// Function to get CSS class based on category name
+function getCategoryClass($categoryName) {
+    $mapping = [
+        'IA' => 'category-ia',
+        'Dev mobile' => 'category-mobile',
+        'Data' => 'category-data',
+        'Dev web' => 'category-web'
+    ];
+    return $mapping[$categoryName] ?? 'category-default';
 }
 
-}catch(Exception $e){
+// Get all prompts from database
+try {
+    $stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id");
+    $stmt->execute();
+    $allPrompts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if(empty($allPrompts)) {
+        $allPrompts = [];
+    }
+}
+catch(Exception $e) {
     die("Error fetching prompts: " . $e->getMessage());
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-$recherche = trim($_POST["search"] ?? "");
-
-if(empty($recherche)){
-    echo "<script>alert('Please enter a search term');</script>";
-}else{
-
-    try{
-
-        $stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id WHERE p.title LIKE :search OR p.context LIKE :search");
-        $searchTerm = "%$recherche%" ;
-        $stmt->bindParam(':search', $searchTerm);
-        $stmt->execute();
-        $allPromptsSearch = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if(empty($allPromptsSearch)){
-            echo "<script>alert('No prompts found for \"$recherche\"');</script>";
-            $allPrompts = [];
-        }else{
-            $allPrompts = $allPromptsSearch;
+// Handle search functionality
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $recherche = trim($_POST["search"] ?? "");
+    
+    if(empty($recherche)) {
+        echo "<script>alert('Please enter a search term');</script>";
+    } else {
+        try {
+            $searchTerm = "%$recherche%";
+            $stmt = $pdo->prepare("SELECT p.*, c.name AS category_name FROM prompt p INNER JOIN categorie c ON p.categorie_id = c.id WHERE p.title LIKE :search OR p.context LIKE :search");
+            $stmt->bindParam(':search', $searchTerm);
+            $stmt->execute();
+            $allPromptsSearch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if(empty($allPromptsSearch)) {
+                echo "<script>alert('No prompts found for \"$recherche\"');</script>";
+                $allPrompts = [];
+            } else {
+                $allPrompts = $allPromptsSearch;
+            }
         }
-
-
-    }catch(PDOException $e){
-
-        die("Error searching prompts: " . $e->getMessage()) ;
-
+        catch(PDOException $e) {
+            die("Error searching prompts: " . $e->getMessage());
+        }
     }
-
-
-}
-
 }
 
 ?>
@@ -74,28 +76,27 @@ if(empty($recherche)){
             <div class="logo-icon">⚡</div>
             <div class="logo-text">
                 <div class="logo-name" id="siteName">Prompt Repository</div>
-                <div class="logo-subtitle" id="siteTagline">AI Platform</div>
+                <div class="logo-subtitle" id="siteTagline">Prompt Platform</div>
             </div>
         </div>
 
         <nav id="sideNav">
             <ul id="menuList">
-                <li><a id="menuDashboard" href="../index.php"><span class="nav-icon">📊</span> Dashboard</a></li>
-                <li><a id="menuCategories" class="active" href="list.php"><span class="nav-icon">📂</span> Community</a></li>
-                <li><a id="menuAddPrompt" href="created.php"><svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Add Prompt</a></li>
-                <li><a id="menuSettings" href="#"><span class="nav-icon">⚙️</span> Settings</a></li>
+                <li><a id="menuDashboard" href="../index.php"><span class="nav-icon"><img src="../img/dashboard.svg" alt="Dashboard"></span> Dashboard</a></li>
+                <li><a id="menuCategories" class="active" href="list.php"><span class="nav-icon"><img src="../img/community.svg" alt="Community"></span> Community</a></li>
+                <li><a id="menuAddPrompt" href="created.php"><span class="nav-icon"><img src="../img/add-prompt.svg" alt="Add Prompt"></span> Add Prompt</a></li>
             </ul>
         </nav>
 
         <div class="user-profile" id="profileCard">
-            <img src="img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
+            <img src="../img/user.svg" alt="User Avatar" class="user-avatar" id="userAvatar">
             <div class="user-info" id="userInfo">
                 <div class="user-name" id="userName"><?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Utilisateur'; ?></div>
-                <div class="user-role" id="userRole">Pro Account</div>
+                <div class="user-role" id="userRole">user Account</div>
             </div>
         </div>
 
-        <a id="logoutButton" class="logout-link" href="Auth/logout.php">Déconnexion</a>
+        <a id="logoutButton" class="logout-link" href="../Auth/logout.php">Déconnexion</a>
 
     </header>
 
@@ -117,6 +118,8 @@ if(empty($recherche)){
 
         <!-- Prompts Grid -->
         <div class="prompts-grid">
+            
+            <!-- If no prompts found, show empty state -->
             <?php if(empty($allPrompts)): ?>
                 <div class="empty-state">
                     <div class="empty-icon">📭</div>
@@ -124,28 +127,38 @@ if(empty($recherche)){
                     <p>Be the first to create a prompt!</p>
                     <a href="created.php" class="btn-create">+ Create Prompt</a>
                 </div>
+            
+            <!-- Otherwise, display all prompts in cards -->
             <?php else: ?>
-
-
                 <?php foreach($allPrompts as $prompt): ?>
-
                     <div class="prompt-card">
+                        <!-- Category tag with color -->
                         <div class="card-header">
-                            <span class="card-category"><?php echo htmlspecialchars($prompt['category_name']); ?></span>
-                            <span class="card-bookmark" title="Bookmark">🔖</span>
+                            <span class="card-category <?php echo getCategoryClass($prompt['category_name']); ?>">
+                                <?php echo htmlspecialchars($prompt['category_name']); ?>
+                            </span>
                         </div>
-                        <h3 class="card-title"><?php echo htmlspecialchars($prompt['title']); ?></h3>
-                        <p class="card-excerpt"><?php echo htmlspecialchars(mb_strimwidth($prompt['context'], 0, 120, '...')); ?></p>
+                        
+                        <!-- Prompt title -->
+                        <h3 class="card-title">
+                            <?php echo htmlspecialchars($prompt['title']); ?>
+                        </h3>
+                        
+                        <!-- Prompt preview text -->
+                        <p class="card-excerpt">
+                            <?php echo htmlspecialchars(mb_strimwidth($prompt['context'], 0, 120, '...')); ?>
+                        </p>
+                        
+                        <!-- View prompt button -->
                         <div class="card-footer">
-                            <a href="detail.php?id=<?php echo $prompt['id']; ?>" class="card-link">View Prompt →</a>
-                           
+                            <a href="detail.php?id=<?php echo $prompt['id']; ?>" class="card-link">
+                                View Prompt →
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
-
-
-
             <?php endif; ?>
+            
         </div>
     </main>
 

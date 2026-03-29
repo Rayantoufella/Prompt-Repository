@@ -117,9 +117,24 @@ nav a {
     font-size: 14px;
 }
 
+nav a img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    opacity: 0.7;
+    filter: invert(50%) sepia(10%) saturate(0.8);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
 nav a:hover {
     color: #ef4444;
     background: rgba(239, 68, 68, 0.1);
+}
+
+nav a:hover img {
+    opacity: 1;
+    filter: invert(35%) sepia(58%) saturate(1.2) hue-rotate(355deg) brightness(1.1);
 }
 
 nav a.active {
@@ -127,6 +142,11 @@ nav a.active {
     background: rgba(239, 68, 68, 0.15);
     border-left: 3px solid #ef4444;
     padding-left: 13px;
+}
+
+nav a.active img {
+    opacity: 1;
+    filter: invert(35%) sepia(58%) saturate(1.2) hue-rotate(355deg) brightness(1.1);
 }
 
 /* ============================================
